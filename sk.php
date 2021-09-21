@@ -24,6 +24,11 @@ class SK
         add_action('init', [$this, 'custom_post_type']);
     }
 
+    function register()
+    {
+        add_action('admin_enqueue_scripts', [$this, 'enqueue']);
+    }
+
     function activate()
     {
         // Generate CPT
@@ -48,10 +53,18 @@ class SK
     {
         register_post_type('book', ['public' => true, 'label' => 'Books']);
     }
+
+    function enqueue()
+    {
+        // enqueue all scripts
+        wp_enqueue_style('mypluginstyle', plugins_url('/assets/mystyle.css', __FILE__));
+        wp_enqueue_script('mypluginscript', plugins_url('/assets/myscript.js', __FILE__));
+    }
 }
 
 if (class_exists('SK')) {
     $sk = new SK();
+    $sk->register();
 }
 
 // activation
