@@ -18,29 +18,34 @@ defined('ABSPATH') or die('Hey, you can\t access this file, you silly human');
 
 class SK
 {
+    public $plugin;
 
     function __construct()
     {
-        add_action('init', [$this, 'custom_post_type']);
+        $this->plugin = plugin_basename(__FILE__);
     }
 
     function register()
     {
         add_action('admin_enqueue_scripts', [$this, 'enqueue']);
+        add_action('admin_menu', [$this, 'add_admin_pages']);
+    }
+
+    public function add_admin_pages()
+    {
+        add_menu_page('SK Plugin', 'Sk', 'manage_options', 'sk_plugin', [$this, 'admin_index'], 'dashicons-store', 110);
+    }
+
+    public function admin_index()
+    {
+        require_once plugin_dir_path(__FILE__) . 'templates/admin.php';
     }
 
     function activate()
     {
         // Generate CPT
-        $this->custom_post_type();
-
         require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-activate.php';
         SkPluginActivate::activate();
-    }
-
-    function custom_post_type()
-    {
-        register_post_type('book', ['public' => true, 'label' => 'Books']);
     }
 
     function enqueue()
