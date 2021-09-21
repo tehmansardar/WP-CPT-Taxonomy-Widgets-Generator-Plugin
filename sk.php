@@ -33,20 +33,9 @@ class SK
     {
         // Generate CPT
         $this->custom_post_type();
-        // Flush rewrtie rules
-        flush_rewrite_rules();
-    }
 
-    function deactivate()
-    {
-        // Flush rewrite rules
-        flush_rewrite_rules();
-    }
-
-    function uninstall()
-    {
-        // delete CPT
-        // delete all the plugin data from DB
+        require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-activate.php';
+        SkPluginActivate::activate();
     }
 
     function custom_post_type()
@@ -71,4 +60,5 @@ if (class_exists('SK')) {
 register_activation_hook(__FILE__, [$sk, 'activate']);
 
 // deactivation
-register_deactivation_hook(__FILE__, [$sk, 'deactivate']);
+require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-deactivate.php';
+register_deactivation_hook(__FILE__, ['SkPluginDeactivate', 'deactivate']);
