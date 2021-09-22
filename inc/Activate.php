@@ -3,7 +3,10 @@
 /**
  * @package SkPlugin  
  */
-class SkPluginActivate
+
+namespace Inc;
+
+class Activate
 {
     public static function activate()
     {

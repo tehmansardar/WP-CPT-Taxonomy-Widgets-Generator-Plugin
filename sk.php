@@ -16,6 +16,13 @@ Text Domain: Sk-Plugin
 
 defined('ABSPATH') or die('Hey, you can\t access this file, you silly human');
 
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
+}
+
+use Inc\Activate;
+use Inc\Deactivate;
+
 class SK
 {
     public $plugin;
@@ -54,8 +61,8 @@ class SK
     function activate()
     {
         // Generate CPT
-        require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-activate.php';
-        SkPluginActivate::activate();
+        // require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-activate.php';
+        Activate::activate();
     }
 
     function enqueue()
@@ -75,5 +82,5 @@ if (class_exists('SK')) {
 register_activation_hook(__FILE__, [$sk, 'activate']);
 
 // deactivation
-require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-deactivate.php';
-register_deactivation_hook(__FILE__, ['SkPluginDeactivate', 'deactivate']);
+// require_once plugin_dir_path(__FILE__) . 'inc/sk-plugin-deactivate.php';
+register_deactivation_hook(__FILE__, ['Deactivate', 'deactivate']);

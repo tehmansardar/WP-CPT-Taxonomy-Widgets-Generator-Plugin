@@ -4,7 +4,9 @@
  * @package SkPlugin  
  */
 
-class SkPluginDeactivate
+namespace Inc;
+
+class Deactivate
 {
     public static function deactivate()
     {
